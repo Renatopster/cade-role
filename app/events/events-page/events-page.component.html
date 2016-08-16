@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Eventos</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding class="events">
+  <ion-list>
+    <ion-item [class.selected]="event === selectedEvent" *ngFor="let event of events" (click)="onSelect(event)">
+      <ion-thumbnail item-left>
+        <img src="{{ event.eventProfilePicture }}">
+      </ion-thumbnail>
+      <h2>{{ event.eventName }}</h2>
+      <p>{{ event.venueName }}</p>
+      <p><time>{{ event.eventStarttime | amCalendar}}</time></p>
+      <p>{{ event.eventStats.attendingCount }} <ion-icon name="thumbs-up"></ion-icon> {{ event.eventStats.maybeCount }} <ion-icon name="star"></ion-icon></p>
+    </ion-item>
+  </ion-list>
+</ion-content>
