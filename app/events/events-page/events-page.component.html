@@ -8,12 +8,12 @@
   <ion-list>
     <ion-item [class.selected]="event === selectedEvent" *ngFor="let event of events" (click)="onSelect(event)">
       <ion-thumbnail item-left>
-        <img src="{{ event.eventProfilePicture }}">
+        <img src="{{ event.profilePicture }}">
       </ion-thumbnail>
-      <h2>{{ event.eventName }}</h2>
-      <p>{{ event.venueName }}</p>
-      <p><time>{{ event.eventStarttime | amCalendar}}</time></p>
-      <p>{{ event.eventStats.attendingCount }} <ion-icon name="thumbs-up"></ion-icon> {{ event.eventStats.maybeCount }} <ion-icon name="star"></ion-icon></p>
+      <h2>{{ event.name }}</h2>
+      <p>{{ event.venue.name }}</p>
+      <p><time>{{ event.startTime | amCalendar}}</time></p>
+      <p>{{ event.stats.attending }} <ion-icon name="thumbs-up"></ion-icon> {{ event.stats.maybe }} <ion-icon name="star"></ion-icon></p>
     </ion-item>
   </ion-list>
 </ion-content>
