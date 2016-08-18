@@ -4,15 +4,17 @@ import {StatusBar} from 'ionic-native';
 import {TabsPage} from './shared/tabs/tabs.component';
 import * as moment from 'moment';
 import 'moment/locale/pt-br';
+import {LocationService} from "./services/location.service";
 
 @Component({
-  template: '<ion-nav [root]="rootPage"></ion-nav>'
+  template: '<ion-nav [root]="rootPage"></ion-nav>',
+  providers: [LocationService]
 })
 export class MyApp {
 
   private rootPage: any;
 
-  constructor(private platform: Platform) {
+  constructor(private platform: Platform, private locationService: LocationService) {
     this.rootPage = TabsPage;
 
     platform.ready().then(() => {
