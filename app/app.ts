@@ -10,11 +10,11 @@ import {LocationService} from "./services/location.service";
   template: '<ion-nav [root]="rootPage"></ion-nav>',
   providers: [LocationService]
 })
-export class MyApp {
+export class CadeRoleApp {
 
   private rootPage: any;
 
-  constructor(private platform: Platform, private locationService: LocationService) {
+  constructor(private platform: Platform) {
     this.rootPage = TabsPage;
 
     platform.ready().then(() => {
@@ -25,5 +25,5 @@ export class MyApp {
   }
 }
 
-ionicBootstrap(MyApp);
+ionicBootstrap(CadeRoleApp);
 moment.locale('pt-br');

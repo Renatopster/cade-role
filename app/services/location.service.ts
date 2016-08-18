@@ -1,14 +1,19 @@
 import {Injectable} from '@angular/core';
+import {ReplaySubject} from "rxjs";
+import LatLng = google.maps.LatLng;
 
 @Injectable()
 export class LocationService {
 
-  latitude: number;
-  longitude: number;
-  zoom: number;
+  private location = new ReplaySubject<LatLng>();
+  location$ = this.location.asObservable();
 
   constructor() {
     this.initLocation();
+  }
+
+  updateLocation(location) {
+    this.location.next(location);
   }
 
   initLocation() {
@@ -16,8 +21,7 @@ export class LocationService {
 
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        this.latitude = position.coords.latitude;
-        this.longitude = position.coords.longitude;
+        this.updateLocation(new LatLng(position.coords.latitude, position.coords.longitude));
       },
 
       (error) => {

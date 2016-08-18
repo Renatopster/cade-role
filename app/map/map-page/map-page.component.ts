@@ -6,20 +6,20 @@ import {LocationService} from "../../services/location.service";
 })
 export class MapPage {
   map;
+  location;
 
   constructor(private locationService: LocationService) {
 
   }
 
   ngOnInit() {
+    this.locationService.location$.subscribe(location => this.location = location);
     this.loadMap();
   }
 
   loadMap() {
-    let latLng = new google.maps.LatLng(this.locationService.latitude, this.locationService.longitude);
-
     let mapOptions = {
-      center: latLng,
+      center: this.location,
       zoom: 15,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     }
