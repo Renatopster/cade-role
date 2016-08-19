@@ -4,8 +4,35 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content>
   <img src="{{event.coverPicture}}"/>
-  <h2>{{ event.name }}</h2>
-  <p class="ws-pre-wrap">{{ event.description }}</p>
+  <div padding-horizontal>
+    <h5>{{ event.name }}</h5>
+    <p style="font-size:1.3em">
+      {{ event.stats.attending }}
+      <ion-icon name="thumbs-up" style="margin-right: 5px"></ion-icon>
+      {{ event.stats.maybe }}
+      <ion-icon name="star"></ion-icon>
+    </p>
+    <p>
+      <strong>
+        <time>{{ event.startTime | amCalendar}}</time>
+      </strong><br/>
+      <time>{{ event.startTime | amDateFormat: 'L LT'}}</time>
+      -
+      <time>{{ event.endTime | amDateFormat: 'L LT'}}</time>
+    </p>
+    <p>
+      <strong>{{ event.venue.name }}</strong><br/>
+      {{ event.venue.location.street }} - {{ event.venue.location.city }}/{{ event.venue.location.state }}
+    </p>
+    <p>
+      <a button clear small href="https://www.facebook.com/events/{{event.id}}/">
+        <ion-icon name="link"></ion-icon>
+        Ver no Facebook
+      </a>
+    </p>
+    <h6>Detalhes</h6>
+    <p class="ws-pre-wrap">{{ event.description }}</p>
+  </div>
 </ion-content>
