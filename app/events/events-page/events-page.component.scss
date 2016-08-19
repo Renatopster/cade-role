@@ -1,6 +1,10 @@
 .events {
 }
 
+.events .item {
+  padding-left: 0;
+}
+
 .events .item:hover {
   background-color: #EEE;
   cursor: pointer;
