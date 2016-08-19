@@ -21,7 +21,7 @@ export class EventService {
     var distance = 500;
 
     return new Promise(resolve => {
-      this.http.get('http://localhost:3000/events?lat=' + lat + '&lng=' + lng + '&distance=' + distance + '&sort=popularity&since=' + this.since.toISOString() + '&until=' + this.until.toISOString())
+      this.http.get('http://cade-role.renatogripp.com.br:3000/events?lat=' + lat + '&lng=' + lng + '&distance=' + distance + '&sort=popularity&since=' + this.since.toISOString() + '&until=' + this.until.toISOString())
         .map(res => res.json())
         .subscribe(data => {
           resolve(data.events);
