@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {ReplaySubject} from "rxjs";
 import LatLng = google.maps.LatLng;
+import {Geolocation} from 'ionic-native';
 
 @Injectable()
 export class LocationService {
@@ -19,14 +20,13 @@ export class LocationService {
   initLocation() {
     let options = {timeout: 10000, enableHighAccuracy: true};
 
-    navigator.geolocation.getCurrentPosition(
+    Geolocation.getCurrentPosition(options).then(
       (position) => {
         this.updateLocation(new LatLng(position.coords.latitude, position.coords.longitude));
       },
-
       (error) => {
         console.log(error);
-      }, options
+      }
     );
   }
 }
