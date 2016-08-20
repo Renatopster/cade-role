@@ -15,12 +15,8 @@ export class EventsPage {
 
   events;
 
-  constructor(private eventService: EventService, private locationService: LocationService, private navCtrl: NavController) {
-    locationService.location$.subscribe(
-      location => eventService.getEvents(location).then(
-        events => this.events = events
-      )
-    );
+  constructor(private eventService: EventService, private navCtrl: NavController) {
+    eventService.events$.subscribe(events => this.events = events)
   }
 
   onSelect(event) {
