@@ -1,27 +1,38 @@
-import {Component} from '@angular/core';
-import {Platform, ionicBootstrap} from 'ionic-angular';
+import {Component, ViewChild} from '@angular/core';
+import {Platform, ionicBootstrap, NavController} from 'ionic-angular';
 import {StatusBar} from 'ionic-native';
-import {TabsPage} from './shared/tabs/tabs.component';
 import * as moment from 'moment';
 import 'moment/locale/pt-br';
 import {LocationService} from "./services/location.service";
+import {EventsPage} from "./events/events-page/events-page.component";
+import {MapPage} from "./map/map-page/map-page.component";
 
 @Component({
-  template: '<ion-nav [root]="rootPage"></ion-nav>',
-  providers: [LocationService]
+  templateUrl: "build/app.html",
+  providers: [LocationService, EventsPage, MapPage]
 })
 export class CadeRoleApp {
 
-  private rootPage: any;
+  @ViewChild('nav') nav: NavController;
 
-  constructor(private platform: Platform) {
-    this.rootPage = TabsPage;
+  private rootPage;
+  private pages;
 
+  constructor(private platform: Platform, private mapPage: MapPage) {
+    this.rootPage = EventsPage;
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       StatusBar.styleDefault();
     });
+    this.pages = {
+      'map': MapPage,
+      'events': EventsPage
+    }
+  }
+
+  goToPage(page) {
+    this.nav.setRoot(this.pages[page]);
   }
 }
 

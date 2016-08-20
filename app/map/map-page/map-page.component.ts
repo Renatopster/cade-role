@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ViewChild, ElementRef} from '@angular/core';
 import {LocationService} from "../../services/location.service";
 
 @Component({
@@ -7,14 +7,26 @@ import {LocationService} from "../../services/location.service";
 export class MapPage {
   map;
   location;
+  @ViewChild('map') mapElement: ElementRef;
 
   constructor(private locationService: LocationService) {
-
   }
 
-  ngOnInit() {
-    this.locationService.location$.subscribe(location => this.location = location);
-    this.loadMap();
+  ionViewDidEnter() {
+    this.resizeMap();
+  }
+
+  ionViewLoaded() {
+    this.locationService.location$.subscribe(location => {
+      this.location = location;
+      this.loadMap();
+    });
+  }
+
+  private resizeMap(): void {
+    if (this.map) {
+      google.maps.event.trigger(this.map, 'resize');
+    }
   }
 
   loadMap() {
@@ -23,7 +35,7 @@ export class MapPage {
       zoom: 15,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     }
-    this.map = new google.maps.Map(document.getElementById("map"), mapOptions);
+    this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
   }
 
 }

@@ -17,13 +17,10 @@ export class EventsPage {
 
   constructor(private eventService: EventService, private locationService: LocationService, private navCtrl: NavController) {
     locationService.location$.subscribe(
-      location => {
-        eventService.getEvents(location).then(events => {
-          this.events = events;
-        });
-      });
-
-
+      location => eventService.getEvents(location).then(
+        events => this.events = events
+      )
+    );
   }
 
   onSelect(event) {

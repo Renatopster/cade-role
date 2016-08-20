@@ -1,11 +1,14 @@
 <ion-header>
   <ion-navbar>
+    <button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
     <ion-title>
       Mapa de Eventos
     </ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding class="map">
-  <div id="map" data-tap-disabled="true"></div>
+<ion-content no-padding class="map">
+  <div #map id="map" data-tap-disabled="true"></div>
 </ion-content>

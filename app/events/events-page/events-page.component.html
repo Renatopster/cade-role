@@ -1,5 +1,8 @@
 <ion-header>
   <ion-navbar>
+    <button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
     <ion-title>Eventos</ion-title>
   </ion-navbar>
 </ion-header>
@@ -12,8 +15,14 @@
       </ion-thumbnail>
       <h2>{{ event.name }}</h2>
       <p>{{ event.venue.name }}</p>
-      <p><time>{{ event.startTime | amCalendar}}</time></p>
-      <p>{{ event.stats.attending }} <ion-icon name="thumbs-up"></ion-icon> {{ event.stats.maybe }} <ion-icon name="star"></ion-icon></p>
+      <p>
+        <time>{{ event.startTime | amCalendar}}</time>
+      </p>
+      <p>{{ event.stats.attending }}
+        <ion-icon name="thumbs-up"></ion-icon>
+        {{ event.stats.maybe }}
+        <ion-icon name="star"></ion-icon>
+      </p>
     </ion-item>
   </ion-list>
 </ion-content>
