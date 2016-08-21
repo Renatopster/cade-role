@@ -2,13 +2,11 @@ import {EventService} from "../../services/event.service";
 import {Component} from '@angular/core';
 import {NavController} from "ionic-angular";
 import {EventDetailPage} from "../event-detail/event-detail.component";
-import {CalendarPipe} from "angular2-moment";
-import {LocationService} from "../../services/location.service";
+import {EventItem} from "../event-item/event-item.component";
 
 @Component({
   templateUrl: 'build/events/events-page/events-page.component.html',
-  pipes: [CalendarPipe],
-  providers: [EventService]
+  directives: [EventItem]
 })
 
 export class EventsPage {
@@ -18,12 +16,5 @@ export class EventsPage {
   constructor(private eventService: EventService, private navCtrl: NavController) {
     eventService.events$.subscribe(events => this.events = events)
   }
-
-  onSelect(event) {
-    this.navCtrl.push(EventDetailPage, {
-      event: event
-    });
-  }
-
 
 }

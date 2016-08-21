@@ -2,27 +2,31 @@ import {Injectable} from '@angular/core';
 import {ReplaySubject} from "rxjs";
 import LatLng = google.maps.LatLng;
 import {Geolocation} from 'ionic-native';
+import LatLngBounds = google.maps.LatLngBounds;
 
 @Injectable()
 export class LocationService {
 
-  private location = new ReplaySubject<LatLng>();
-  location$ = this.location.asObservable();
+  private userLocation = new ReplaySubject<LatLng>();
+  userLocation$ = this.userLocation.asObservable();
+  private bounds = new ReplaySubject<LatLngBounds>();
+  bounds$ = this.bounds.asObservable();
 
   constructor() {
-    this.initLocation();
+    this.monitorUserLocation();
+    setInterval(this.monitorUserLocation, 10000);
   }
 
-  updateLocation(location) {
-    this.location.next(location);
+  updateBounds(bounds) {
+    this.bounds.next(bounds);
   }
 
-  initLocation() {
-    let options = {timeout: 10000, enableHighAccuracy: true};
+  monitorUserLocation() {
+    let options = {timeout: 3000, enableHighAccuracy: true};
 
     Geolocation.getCurrentPosition(options).then(
       (position) => {
-        this.updateLocation(new LatLng(position.coords.latitude, position.coords.longitude));
+        this.userLocation.next(new LatLng(position.coords.latitude, position.coords.longitude));
       },
       (error) => {
         console.log(error);
