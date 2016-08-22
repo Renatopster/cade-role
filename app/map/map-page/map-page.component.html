@@ -1,11 +1,16 @@
 <ion-header>
   <ion-navbar>
-    <button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>
-      Eventos
-    </ion-title>
+    <ion-buttons>
+      <button (click)="changeDateModal()">
+        <ion-icon name="time"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>Eventos</ion-title>
+    <ion-buttons end>
+      <button (click)="goToEventsList()">
+        <ion-icon name="list"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 <ion-content no-padding class="map">

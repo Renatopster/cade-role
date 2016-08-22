@@ -1,6 +1,8 @@
 import {Component, ViewChild, ElementRef} from '@angular/core';
 import {LocationService} from "../../services/location.service";
 import {EventService} from "../../services/event.service";
+import {NavController} from "ionic-angular";
+import {EventsPage} from "../../events/events-page/events-page.component";
 
 @Component({
   templateUrl: 'build/map/map-page/map-page.component.html'
@@ -12,7 +14,15 @@ export class MapPage {
   private map;
   @ViewChild('map') mapElement: ElementRef;
 
-  constructor(private locationService: LocationService, private eventService: EventService) {
+  constructor(private navCtrl: NavController, private locationService: LocationService, private eventService: EventService) {
+  }
+
+  goToEventsList() {
+    this.navCtrl.setRoot(EventsPage);
+  }
+
+  changeDateModal() {
+    console.log('coming soon');
   }
 
   ionViewDidEnter() {
