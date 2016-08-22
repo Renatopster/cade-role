@@ -7,9 +7,9 @@ import {EventService} from "../../services/event.service";
 })
 export class MapPage {
   private userMarker;
+  private circleMarker;
   private eventsMarkers = [];
   private map;
-  private bounds;
   @ViewChild('map') mapElement: ElementRef;
 
   constructor(private locationService: LocationService, private eventService: EventService) {
@@ -46,6 +46,19 @@ export class MapPage {
 
     this.map.addListener('idle', () => {
       this.locationService.updateBounds(this.map.getBounds());
+      if (this.circleMarker) {
+        this.circleMarker.setMap(null);
+      }
+      this.circleMarker = new google.maps.Circle({
+        strokeColor: '#FFFF00',
+        strokeOpacity: 1,
+        strokeWeight: 2,
+        fillColor: '#FFFFCC',
+        fillOpacity: 0.35,
+        map: this.map,
+        center: this.map.getCenter(),
+        radius: 1000
+      });
     });
   }
 
@@ -81,16 +94,6 @@ export class MapPage {
         this.eventsMarkers.push(marker);
       }
 
-      this.eventsMarkers.push(new google.maps.Circle({
-        strokeColor: '#FFFF00',
-        strokeOpacity: 1,
-        strokeWeight: 2,
-        fillColor: '#FFFFCC',
-        fillOpacity: 0.35,
-        map: this.map,
-        center: this.map.getCenter(),
-        radius: 1000
-      }));
     });
   }
 
