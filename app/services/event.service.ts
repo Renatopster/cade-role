@@ -12,6 +12,8 @@ export class EventService {
   private events = new ReplaySubject();
   events$ = this.events.asObservable();
 
+  private bounds;
+
   since: Date;
   until: Date;
 
@@ -29,16 +31,18 @@ export class EventService {
 
   private listenForChanges() {
     this.locationService.bounds$.subscribe(bounds => {
-      var center = bounds.getCenter();
-      // var distance = Math.ceil(spherical.computeDistanceBetween(center, bounds.getSouthWest()));
-      var distance = 1000;
-      this.getEvents(center, distance).then(events => this.updateEvents(events))
+      this.bounds = bounds;
+      this.getEvents().then(events => this.updateEvents(events))
     });
   }
 
-  private getEvents(location, distance) {
-    var lat = location.lat();
-    var lng = location.lng();
+  getEvents() {
+    var center = this.bounds.getCenter();
+    // var distance = Math.ceil(spherical.computeDistanceBetween(center, bounds.getSouthWest()));
+    var distance = 1000;
+
+    var lat = center.lat();
+    var lng = center.lng();
 
     return new Promise(resolve => {
       this.http.get('http://cade-role.renatogripp.com.br:3000/events?lat=' + lat + '&lng=' + lng + '&distance=' + distance + '&sort=popularity&since=' + this.since.toISOString() + '&until=' + this.until.toISOString())

@@ -1,7 +1,5 @@
 import {EventService} from "../../services/event.service";
 import {Component} from '@angular/core';
-import {NavController} from "ionic-angular";
-import {EventDetailPage} from "../event-detail/event-detail.component";
 import {EventItem} from "../event-item/event-item.component";
 
 @Component({
@@ -13,8 +11,15 @@ export class EventsPage {
 
   events;
 
-  constructor(private eventService: EventService, private navCtrl: NavController) {
+  constructor(private eventService: EventService) {
     eventService.events$.subscribe(events => this.events = events)
+  }
+
+  doRefresh(refresher) {
+    this.eventService.getEvents().then(events => {
+      this.events = events;
+      refresher.complete();
+    });
   }
 
 }
