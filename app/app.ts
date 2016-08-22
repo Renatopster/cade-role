@@ -18,9 +18,9 @@ export class CadeRoleApp {
 
   private rootPage;
   private pages;
+  private currentPage = 'events';
 
   constructor(private platform: Platform) {
-    this.rootPage = MapPage;
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -30,9 +30,11 @@ export class CadeRoleApp {
       'map': MapPage,
       'events': EventsPage
     }
+    this.rootPage = this.pages[this.currentPage];
   }
 
   goToPage(page) {
+    this.currentPage = page;
     this.nav.setRoot(this.pages[page]);
   }
 }
