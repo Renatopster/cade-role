@@ -3,6 +3,7 @@ import {ReplaySubject} from "rxjs";
 import LatLng = google.maps.LatLng;
 import {Geolocation} from 'ionic-native';
 import LatLngBounds = google.maps.LatLngBounds;
+import {TimerWrapper} from "@angular/core/src/facade/async";
 
 @Injectable()
 export class LocationService {
@@ -14,7 +15,7 @@ export class LocationService {
 
   constructor() {
     this.monitorUserLocation();
-    setInterval(this.monitorUserLocation, 10000);
+    TimerWrapper.setInterval(() => this.monitorUserLocation(), 5000);
   }
 
   updateBounds(bounds) {
