@@ -26,10 +26,10 @@ export class EventService {
     this.until = new Date();
     this.until.setDate(this.until.getDate() + 2);
 
-    this.listenForChanges();
+    this.subscribeToMapArea();
   }
 
-  private listenForChanges() {
+  private subscribeToMapArea() {
     this.locationService.bounds$.subscribe(bounds => {
       this.bounds = bounds;
       this.getEvents().then(events => this.updateEvents(events))
