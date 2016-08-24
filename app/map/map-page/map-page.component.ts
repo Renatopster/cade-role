@@ -1,11 +1,12 @@
 import {Component, ViewChild, ElementRef} from '@angular/core';
 import {LocationService} from "../../services/location.service";
 import {EventService} from "../../services/event.service";
-import {NavController, PopoverController} from "ionic-angular";
+import {NavController} from "ionic-angular";
 import {EventsSettings} from "../../events/events-settings/events-settings";
 
 @Component({
-  templateUrl: 'build/map/map-page/map-page.component.html'
+  templateUrl: 'build/map/map-page/map-page.component.html',
+  providers: [EventsSettings]
 })
 export class MapPage {
   private userMarker;
@@ -17,14 +18,7 @@ export class MapPage {
   constructor(private navCtrl: NavController,
               private locationService: LocationService,
               private eventService: EventService,
-              private popoverCtrl: PopoverController) {
-  }
-
-  showEventsSettings(clickEvent) {
-    let popover = this.popoverCtrl.create(EventsSettings);
-    popover.present({
-      ev: clickEvent
-    });
+              private eventsSettings: EventsSettings) {
   }
 
   ionViewDidEnter() {
