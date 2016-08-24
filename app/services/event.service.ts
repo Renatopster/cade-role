@@ -4,7 +4,6 @@ import 'rxjs/add/operator/map';
 import {ReplaySubject} from "rxjs";
 import LatLng = google.maps.LatLng;
 import {LocationService} from "./location.service";
-import spherical = google.maps.geometry.spherical;
 
 interface DateInterval {
   since: Date;
@@ -46,7 +45,6 @@ export class EventService {
     var since = this.dateInterval.since;
     var until = this.dateInterval.until;
     var center = this.center;
-    // var distance = Math.ceil(spherical.computeDistanceBetween(center, bounds.getSouthWest()));
     var distance = 1000;
 
     var lat = center.lat();
