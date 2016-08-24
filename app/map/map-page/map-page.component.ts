@@ -1,7 +1,6 @@
 import {Component, ViewChild, ElementRef} from '@angular/core';
 import {LocationService} from "../../services/location.service";
 import {EventService} from "../../services/event.service";
-import {NavController} from "ionic-angular";
 import {EventsSettings} from "../../events/events-settings/events-settings";
 
 @Component({
@@ -15,8 +14,7 @@ export class MapPage {
   private map;
   @ViewChild('map') mapElement: ElementRef;
 
-  constructor(private navCtrl: NavController,
-              private locationService: LocationService,
+  constructor(private locationService: LocationService,
               private eventService: EventService,
               private eventsSettings: EventsSettings) {
   }
