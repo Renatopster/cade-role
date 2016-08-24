@@ -1,8 +1,8 @@
 import {Component, ViewChild, ElementRef} from '@angular/core';
 import {LocationService} from "../../services/location.service";
 import {EventService} from "../../services/event.service";
-import {NavController} from "ionic-angular";
-import {EventsPage} from "../../events/events-page/events-page.component";
+import {NavController, PopoverController} from "ionic-angular";
+import {EventsSettings} from "../../events/events-settings/events-settings";
 
 @Component({
   templateUrl: 'build/map/map-page/map-page.component.html'
@@ -14,15 +14,17 @@ export class MapPage {
   private map;
   @ViewChild('map') mapElement: ElementRef;
 
-  constructor(private navCtrl: NavController, private locationService: LocationService, private eventService: EventService) {
+  constructor(private navCtrl: NavController,
+              private locationService: LocationService,
+              private eventService: EventService,
+              private popoverCtrl: PopoverController) {
   }
 
-  goToEventsList() {
-    this.navCtrl.setRoot(EventsPage);
-  }
-
-  changeDateModal() {
-    console.log('coming soon');
+  showEventsSettings(clickEvent) {
+    let popover = this.popoverCtrl.create(EventsSettings);
+    popover.present({
+      ev: clickEvent
+    });
   }
 
   ionViewDidEnter() {

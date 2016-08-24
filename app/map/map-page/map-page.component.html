@@ -1,14 +1,9 @@
 <ion-header>
   <ion-navbar>
-    <ion-buttons>
-      <button (click)="changeDateModal()">
-        <ion-icon name="time"></ion-icon>
-      </button>
-    </ion-buttons>
     <ion-title>Eventos</ion-title>
     <ion-buttons end>
-      <button (click)="goToEventsList()">
-        <ion-icon name="list"></ion-icon>
+      <button (click)="showEventsSettings($event)">
+        <ion-icon name="more"></ion-icon>
       </button>
     </ion-buttons>
   </ion-navbar>
