@@ -2,6 +2,7 @@ import {Component, ViewChild, ElementRef} from '@angular/core';
 import {LocationService} from "../../services/location.service";
 import {EventService} from "../../services/event.service";
 import {EventsSettings} from "../../events/events-settings/events-settings";
+import {TimerWrapper} from "@angular/core/src/facade/async";
 
 @Component({
   templateUrl: 'build/map/map-page/map-page.component.html',
@@ -17,6 +18,7 @@ export class MapPage {
   constructor(private locationService: LocationService,
               private eventService: EventService,
               private eventsSettings: EventsSettings) {
+    TimerWrapper.setInterval(() => locationService.grabUserLocation().then(location => this.refreshUserMarker(location)), 5000);
   }
 
   ionViewDidEnter() {
@@ -24,14 +26,14 @@ export class MapPage {
   }
 
   ionViewLoaded() {
-    this.locationService.userLocation$.subscribe(location => {
+    this.locationService.grabUserLocation().then(location => {
       if (!this.map) {
         this.loadMap(location);
       }
       this.refreshUserMarker(location);
     });
 
-    this.loadMarkers();
+    this.loadMarkersWhenEventsChange();
   }
 
   private resizeMap(): void {
@@ -77,7 +79,7 @@ export class MapPage {
     });
   }
 
-  private loadMarkers() {
+  private loadMarkersWhenEventsChange() {
     this.eventService.events$.subscribe(events => {
       for (var i in this.eventsMarkers) {
         this.eventsMarkers[i].setMap(null);
