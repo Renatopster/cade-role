@@ -10,28 +10,33 @@ export class LocationService {
 
   private userLocation = new ReplaySubject<LatLng>();
   userLocation$ = this.userLocation.asObservable();
-  private bounds = new ReplaySubject<LatLngBounds>();
-  bounds$ = this.bounds.asObservable();
+
+  private center = new ReplaySubject<LatLng>();
+  center$ = this.center.asObservable();
 
   constructor() {
-    this.monitorUserLocation();
-    TimerWrapper.setInterval(() => this.monitorUserLocation(), 5000);
+    this.grabUserLocation().then(location => this.center.next(location));
+    TimerWrapper.setInterval(() => this.grabUserLocation(), 5000);
   }
 
-  updateBounds(bounds) {
-    this.bounds.next(bounds);
+  updateCenter(center) {
+    this.center.next(center);
   }
 
-  monitorUserLocation() {
-    let options = {timeout: 3000, enableHighAccuracy: true};
+  grabUserLocation(): Promise<LatLng> {
+    return new Promise(resolve => {
+      let options = {timeout: 3000, enableHighAccuracy: true};
 
-    Geolocation.getCurrentPosition(options).then(
-      (position) => {
-        this.userLocation.next(new LatLng(position.coords.latitude, position.coords.longitude));
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      Geolocation.getCurrentPosition(options).then(
+        (position) => {
+          var location = new LatLng(position.coords.latitude, position.coords.longitude);
+          this.userLocation.next(location);
+          resolve(location);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    })
   }
 }

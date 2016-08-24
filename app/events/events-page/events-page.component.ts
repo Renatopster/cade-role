@@ -19,10 +19,7 @@ export class EventsPage {
   }
 
   doRefresh(refresher) {
-    this.eventService.getEvents().then(events => {
-      this.events = events;
-      refresher.complete();
-    });
+    this.eventService.refreshEvents().then(complete => refresher.complete());
   }
 
 }

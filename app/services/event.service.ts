@@ -9,35 +9,32 @@ import spherical = google.maps.geometry.spherical;
 @Injectable()
 export class EventService {
 
+  center: LatLng;
+
   private events = new ReplaySubject();
   events$ = this.events.asObservable();
-
-  private bounds;
 
   since: Date;
   until: Date;
 
-  updateEvents(events) {
-    this.events.next(events);
-  }
 
   constructor(private http: Http, private locationService: LocationService) {
     this.since = new Date();
     this.until = new Date();
     this.until.setDate(this.until.getDate() + 2);
 
-    this.subscribeToMapArea();
+    this.subscribeToMapCenter();
   }
 
-  private subscribeToMapArea() {
-    this.locationService.bounds$.subscribe(bounds => {
-      this.bounds = bounds;
-      this.getEvents().then(events => this.updateEvents(events))
+  private subscribeToMapCenter() {
+    this.locationService.center$.subscribe(center => {
+      this.center = center;
+      this.refreshEvents();
     });
   }
 
-  getEvents() {
-    var center = this.bounds.getCenter();
+  refreshEvents() {
+    var center = this.center;
     // var distance = Math.ceil(spherical.computeDistanceBetween(center, bounds.getSouthWest()));
     var distance = 1000;
 
@@ -48,7 +45,8 @@ export class EventService {
       this.http.get('http://cade-role.renatogripp.com.br:3000/events?lat=' + lat + '&lng=' + lng + '&distance=' + distance + '&sort=popularity&since=' + this.since.toISOString() + '&until=' + this.until.toISOString())
         .map(res => res.json())
         .subscribe(data => {
-          resolve(data.events);
+          this.events.next(data.events);
+          resolve(true);
         });
     });
   }

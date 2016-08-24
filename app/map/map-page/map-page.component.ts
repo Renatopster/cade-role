@@ -49,7 +49,7 @@ export class MapPage {
     this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
 
     this.map.addListener('idle', () => {
-      this.locationService.updateBounds(this.map.getBounds());
+      this.locationService.updateCenter(this.map.getCenter());
       if (this.circleMarker) {
         this.circleMarker.setMap(null);
       }
