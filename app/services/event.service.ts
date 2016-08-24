@@ -6,6 +6,11 @@ import LatLng = google.maps.LatLng;
 import {LocationService} from "./location.service";
 import spherical = google.maps.geometry.spherical;
 
+interface DateInterval {
+  since: Date;
+  until: Date;
+}
+
 @Injectable()
 export class EventService {
 
@@ -14,15 +19,14 @@ export class EventService {
   private events = new ReplaySubject();
   events$ = this.events.asObservable();
 
-  since: Date;
-  until: Date;
-
+  private dateInterval: DateInterval;
 
   constructor(private http: Http, private locationService: LocationService) {
-    this.since = new Date();
-    this.until = new Date();
-    this.until.setDate(this.until.getDate() + 2);
+    var since = new Date();
+    var until = new Date();
+    until.setDate(until.getDate() + 2);
 
+    this.dateInterval = {since: since, until: until};
     this.subscribeToMapCenter();
   }
 
@@ -33,7 +37,14 @@ export class EventService {
     });
   }
 
+  public updateDateInterval(dateInterval:DateInterval) {
+    this.dateInterval = dateInterval;
+    this.refreshEvents();
+  }
+
   refreshEvents() {
+    var since = this.dateInterval.since;
+    var until = this.dateInterval.until;
     var center = this.center;
     // var distance = Math.ceil(spherical.computeDistanceBetween(center, bounds.getSouthWest()));
     var distance = 1000;
@@ -42,7 +53,7 @@ export class EventService {
     var lng = center.lng();
 
     return new Promise(resolve => {
-      this.http.get('http://cade-role.renatogripp.com.br:3000/events?lat=' + lat + '&lng=' + lng + '&distance=' + distance + '&sort=popularity&since=' + this.since.toISOString() + '&until=' + this.until.toISOString())
+      this.http.get('http://cade-role.renatogripp.com.br:3000/events?lat=' + lat + '&lng=' + lng + '&distance=' + distance + '&sort=popularity&since=' + since.toISOString() + '&until=' + until.toISOString())
         .map(res => res.json())
         .subscribe(data => {
           this.events.next(data.events);
