@@ -5,7 +5,7 @@ import * as moment from 'moment';
 import 'moment/locale/pt-br';
 import {EventService} from "./services/event.service";
 import {LocationService} from "./services/location.service";
-import {EventsPage} from "./events/events-page/events-page.component";
+import {TabsPage} from "./tabs/tabs";
 
 @Component({
   templateUrl: "build/app.html",
@@ -18,7 +18,7 @@ export class CadeRoleApp {
   private rootPage;
 
   constructor(private platform: Platform) {
-    this.rootPage = EventsPage;
+    this.rootPage = TabsPage;
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
