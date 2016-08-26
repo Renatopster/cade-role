@@ -4,11 +4,7 @@ import 'rxjs/add/operator/map';
 import {ReplaySubject} from "rxjs";
 import LatLng = google.maps.LatLng;
 import {LocationService} from "./location.service";
-
-interface DateInterval {
-  since: Date;
-  until: Date;
-}
+import {DateInterval} from "../shared/DateInterval";
 
 @Injectable()
 export class EventService {
@@ -36,7 +32,7 @@ export class EventService {
     });
   }
 
-  public updateDateInterval(dateInterval:DateInterval) {
+  public updateDateInterval(dateInterval: DateInterval) {
     this.dateInterval = dateInterval;
     this.refreshEvents();
   }
