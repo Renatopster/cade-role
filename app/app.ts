@@ -8,8 +8,7 @@ import {LocationService} from "./services/location.service";
 import {TabsPage} from "./tabs/tabs";
 
 @Component({
-  templateUrl: "build/app.html",
-  providers: [LocationService, EventService],
+  templateUrl: "build/app.html"
 })
 export class CadeRoleApp {
 
@@ -28,5 +27,5 @@ export class CadeRoleApp {
 
 }
 
-ionicBootstrap(CadeRoleApp);
+ionicBootstrap(CadeRoleApp, [LocationService, EventService]);
 moment.locale('pt-br');
