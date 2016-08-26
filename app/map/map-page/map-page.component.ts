@@ -94,7 +94,7 @@ export class MapPage {
           title: event.name,
           icon: {
             url: event.profilePicture,
-            size: new google.maps.Size(24, 24)
+            scaledSize: new google.maps.Size(24, 24)
           }
         });
         this.eventsMarkers.push(marker);
