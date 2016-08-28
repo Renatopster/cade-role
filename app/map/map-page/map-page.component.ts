@@ -67,6 +67,7 @@ export class MapPage {
     let mapOptions = {
       center: location,
       zoom: 15,
+      streetViewControl: false,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     }
     this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
