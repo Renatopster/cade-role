@@ -71,7 +71,48 @@ export class MapPage {
     }
     this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
 
+    this.addUserLocationButton();
     this.map.addListener('idle', () => this.notifyCenterChange());
+  }
+
+  private addUserLocationButton() {
+    var controlDiv = document.createElement('div');
+
+    var firstChild = document.createElement('button');
+    firstChild.style.backgroundColor = '#fff';
+    firstChild.style.border = 'none';
+    firstChild.style.outline = 'none';
+    firstChild.style.width = '28px';
+    firstChild.style.height = '28px';
+    firstChild.style.borderRadius = '2px';
+    firstChild.style.boxShadow = '0 1px 4px rgba(0,0,0,0.3)';
+    firstChild.style.cursor = 'pointer';
+    firstChild.style.marginRight = '10px';
+    firstChild.style.padding = '0';
+    controlDiv.appendChild(firstChild);
+
+    var secondChild = document.createElement('div');
+    secondChild.style.margin = '5px';
+    secondChild.style.width = '18px';
+    secondChild.style.height = '18px';
+    secondChild.style.backgroundImage = 'url(img/mylocation-sprite-1x.png)';
+    secondChild.style.backgroundSize = '180px 18px';
+    secondChild.style.backgroundPosition = '0 0';
+    secondChild.style.backgroundRepeat = 'no-repeat';
+    firstChild.appendChild(secondChild);
+
+    google.maps.event.addListener(this.map, 'center_changed', () => {
+      secondChild.style['background-position'] = '0 0';
+    });
+
+    firstChild.addEventListener('click', () => {
+      this.locationService.grabUserLocation().then(location => {
+        this.map.panTo(location);
+        this.notifyCenterChange();
+      });
+    });
+
+    this.map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(controlDiv);
   }
 
   private refreshUserMarker(location) {
