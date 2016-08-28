@@ -27,5 +27,9 @@ export class CadeRoleApp {
 
 }
 
-ionicBootstrap(CadeRoleApp, [LocationService, EventService]);
+var customProviders = [LocationService, EventService];
+var config = {
+  tabsHideOnSubPages: "true"
+};
+ionicBootstrap(CadeRoleApp, customProviders, config);
 moment.locale('pt-br');
