@@ -42,6 +42,27 @@ export class MapPage {
     }
   }
 
+  private notifyCenterChange() {
+    this.locationService.updateCenter(this.map.getCenter());
+    this.drawCentralCircleMarker();
+  }
+
+  private drawCentralCircleMarker() {
+    if (this.circleMarker) {
+      this.circleMarker.setMap(null);
+    }
+    this.circleMarker = new google.maps.Circle({
+      strokeColor: '#FFFF00',
+      strokeOpacity: 1,
+      strokeWeight: 2,
+      fillColor: '#FFFFCC',
+      fillOpacity: 0.35,
+      map: this.map,
+      center: this.map.getCenter(),
+      radius: 1000
+    });
+  }
+
   private loadMap(location) {
     let mapOptions = {
       center: location,
@@ -50,22 +71,7 @@ export class MapPage {
     }
     this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
 
-    this.map.addListener('idle', () => {
-      this.locationService.updateCenter(this.map.getCenter());
-      if (this.circleMarker) {
-        this.circleMarker.setMap(null);
-      }
-      this.circleMarker = new google.maps.Circle({
-        strokeColor: '#FFFF00',
-        strokeOpacity: 1,
-        strokeWeight: 2,
-        fillColor: '#FFFFCC',
-        fillOpacity: 0.35,
-        map: this.map,
-        center: this.map.getCenter(),
-        radius: 1000
-      });
-    });
+    this.map.addListener('idle', () => this.notifyCenterChange());
   }
 
   private refreshUserMarker(location) {
