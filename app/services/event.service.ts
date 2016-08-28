@@ -11,7 +11,7 @@ export class EventService {
 
   center: LatLng;
 
-  private events = new ReplaySubject();
+  private events = new ReplaySubject<Array<any>>();
   events$ = this.events.asObservable();
 
   private dateInterval: DateInterval;

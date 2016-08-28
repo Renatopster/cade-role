@@ -13,6 +13,7 @@
   <ion-refresher (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
+  <h2 [hidden]="events.length">Nenhum evento encontrado, verifique no mapa a região pesquisada!</h2>
   <ion-list>
     <event-item *ngFor="let event of events" [event]=event></event-item>
   </ion-list>

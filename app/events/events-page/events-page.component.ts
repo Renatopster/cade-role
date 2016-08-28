@@ -11,7 +11,7 @@ import {EventsSettings} from "../events-settings/events-settings";
 
 export class EventsPage {
 
-  events;
+  events = [];
 
   constructor(private eventService: EventService,
               private eventsSettings: EventsSettings) {
