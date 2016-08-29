@@ -1,13 +1,7 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>Eventos</ion-title>
-    <ion-buttons end>
-      <button (click)="eventsSettings.show($event)">
-        <ion-icon name="more"></ion-icon>
-      </button>
-    </ion-buttons>
-  </ion-navbar>
+  <cr-navbar></cr-navbar>
 </ion-header>
+
 <ion-content no-padding class="map">
   <div #map id="map" data-tap-disabled="true"></div>
 </ion-content>

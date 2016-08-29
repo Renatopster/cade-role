@@ -1,12 +1,12 @@
 import {Component, ViewChild, ElementRef} from '@angular/core';
 import {LocationService} from "../../services/location.service";
 import {EventService} from "../../services/event.service";
-import {EventsSettings} from "../../events/events-settings/events-settings";
 import {TimerWrapper} from "@angular/core/src/facade/async";
+import {CrNavbar} from "../../cr-navbar/cr-navbar";
 
 @Component({
   templateUrl: 'build/map/map-page/map-page.component.html',
-  providers: [EventsSettings]
+  directives: [CrNavbar]
 })
 export class MapPage {
   private userMarker;
@@ -16,8 +16,7 @@ export class MapPage {
   @ViewChild('map') mapElement: ElementRef;
 
   constructor(private locationService: LocationService,
-              private eventService: EventService,
-              private eventsSettings: EventsSettings) {
+              private eventService: EventService) {
     TimerWrapper.setInterval(() => locationService.grabUserLocation().then(location => this.refreshUserMarker(location)), 5000);
   }
 
