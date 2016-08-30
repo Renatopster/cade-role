@@ -5,13 +5,13 @@
 </ion-header>
 
 <ion-content>
-  <img src="{{event.coverPicture}}"/>
+  <img src="{{ event.coverPictureUrl }}"/>
   <div padding-horizontal>
     <h5>{{ event.name }}</h5>
     <p style="font-size:1.3em">
-      {{ event.stats.attending }}
+      {{ event.attendingCount }}
       <ion-icon name="thumbs-up" style="margin-right: 5px"></ion-icon>
-      {{ event.stats.maybe }}
+      {{ event.maybeCount }}
       <ion-icon name="star"></ion-icon>
     </p>
     <p>
@@ -23,11 +23,11 @@
       <time>{{ event.endTime | amDateFormat: 'L LT'}}</time>
     </p>
     <p>
-      <strong>{{ event.venue.name }}</strong><br/>
-      {{ event.venue.location.street }} - {{ event.venue.location.city }}/{{ event.venue.location.state }}
+      <strong>{{ event.venueName }}</strong><br/>
+      {{ event.venueAddress }}
     </p>
     <p>
-      <a button clear small href="https://www.facebook.com/events/{{event.id}}/">
+      <a button clear small href="https://www.facebook.com/events/{{ event.id }}/">
         <ion-icon name="link"></ion-icon>
         Ver no Facebook
       </a>

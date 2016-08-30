@@ -134,13 +134,12 @@ export class MapPage {
       this.eventsMarkers = [];
       for (var i in events) {
         var event = events[i];
-        var location = event.venue.location;
         var marker = new google.maps.Marker({
-          position: new google.maps.LatLng(location.latitude, location.longitude),
+          position: new google.maps.LatLng(event.latitude, event.longitude),
           map: this.map,
           title: event.name,
           icon: {
-            url: event.profilePicture,
+            url: event.profilePictureUrl,
             scaledSize: new google.maps.Size(24, 24)
           }
         });

@@ -5,13 +5,14 @@ import {ReplaySubject} from "rxjs";
 import LatLng = google.maps.LatLng;
 import {LocationService} from "./location.service";
 import {DateInterval} from "../shared/DateInterval";
+import {Event} from "../events/Event";
 
 @Injectable()
 export class EventService {
 
   center: LatLng;
 
-  private events = new ReplaySubject<Array<any>>();
+  private events = new ReplaySubject<Array<Event>>();
   events$ = this.events.asObservable();
 
   private dateInterval: DateInterval;
@@ -46,12 +47,36 @@ export class EventService {
     var lat = center.lat();
     var lng = center.lng();
 
-    return new Promise(resolve => {
+    return new Promise<Array<Event>>(resolve => {
       this.http.get('http://cade-role.renatogripp.com.br:3000/events?lat=' + lat + '&lng=' + lng + '&distance=' + distance + '&sort=popularity&since=' + since.toISOString() + '&until=' + until.toISOString())
-        .map(res => res.json())
-        .subscribe(data => {
-          this.events.next(data.events);
-          resolve(true);
+        .map(res => res.json().events.map((data) => {
+          return <Event>{
+            id: data.id,
+            name: data.name,
+            description: data.description,
+            profilePictureUrl: data.profilePicture,
+            coverPictureUrl: data.coverPicture,
+            attendingCount: data.stats.attending,
+            maybeCount: data.stats.maybe,
+            startTime: data.startTime,
+            endTime: data.endTime,
+            venueName: data.venue.name,
+            venueAddress: (data.venue.location ? data.venue.location.street + ' - ' + data.venue.location.city + '/' + data.venue.location.state : null),
+            latitude: data.venue.location.latitude,
+            longitude: data.venue.location.longitude
+          };
+        }))
+        .subscribe(events => {
+          events = events.sort(function (a, b) {
+            if (a.attendingCount < b.attendingCount) {
+              return 1;
+            } else if (a.attendingCount > b.attendingCount) {
+              return -1;
+            }
+            return 0;
+          });
+          this.events.next(events);
+          resolve(events);
         });
     });
   }

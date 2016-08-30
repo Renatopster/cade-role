@@ -11,7 +11,7 @@ import {NavController} from "ionic-angular";
 
 export class EventItem {
   @Input()
-  event;
+  event: Event;
 
   constructor(private navCtrl: NavController) {
 

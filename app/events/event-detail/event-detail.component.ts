@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {NavParams, NavController} from "ionic-angular";
 import {CalendarPipe, DateFormatPipe} from "angular2-moment";
+import {Event} from "../Event";
 
 @Component({
   templateUrl: 'build/events/event-detail/event-detail.component.html',
@@ -9,7 +10,7 @@ import {CalendarPipe, DateFormatPipe} from "angular2-moment";
 
 export class EventDetailPage {
 
-  event;
+  event: Event;
 
   constructor(private navCtrl: NavController, navParams: NavParams) {
     this.event = navParams.get('event');
