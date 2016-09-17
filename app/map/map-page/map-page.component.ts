@@ -122,7 +122,7 @@ export class MapPage {
     this.userMarker = new google.maps.Marker({
       position: location,
       map: this.map,
-      icon: 'http://www.robotwoods.com/dev/misc/bluecircle.png'
+      icon: 'img/bluecircle.png'
     });
   }
 
