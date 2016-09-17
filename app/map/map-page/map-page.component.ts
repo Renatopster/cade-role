@@ -46,6 +46,10 @@ export class MapPage {
     this.drawCentralCircleMarker();
   }
 
+  private resetEventMarkers() {
+    this.eventsMarkers.map(m => m.setMap(null));
+  }
+
   private drawCentralCircleMarker() {
     if (this.circleMarker) {
       this.circleMarker.setMap(null);
@@ -68,7 +72,7 @@ export class MapPage {
       zoom: 15,
       streetViewControl: false,
       mapTypeId: google.maps.MapTypeId.ROADMAP
-    }
+    };
     this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
 
     this.addUserLocationButton();
@@ -127,25 +131,17 @@ export class MapPage {
   }
 
   private loadMarkersWhenEventsChange() {
+    this.resetEventMarkers();
     this.eventService.events$.subscribe(events => {
-      for (var i in this.eventsMarkers) {
-        this.eventsMarkers[i].setMap(null);
-      }
-      this.eventsMarkers = [];
-      for (var i in events) {
-        var event = events[i];
-        var marker = new google.maps.Marker({
-          position: new google.maps.LatLng(event.latitude, event.longitude),
-          map: this.map,
-          title: event.name,
-          icon: {
-            url: event.profilePictureUrl,
-            scaledSize: new google.maps.Size(24, 24)
-          }
-        });
-        this.eventsMarkers.push(marker);
-      }
-
+      this.eventsMarkers = events.map(event => new google.maps.Marker({
+        position: new google.maps.LatLng(event.latitude, event.longitude),
+        map: this.map,
+        title: event.name,
+        icon: {
+          url: event.profilePictureUrl,
+          scaledSize: new google.maps.Size(24, 24)
+        }
+      }));
     });
   }
 
