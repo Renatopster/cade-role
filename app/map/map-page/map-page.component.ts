@@ -43,10 +43,11 @@ export class MapPage {
 
   private notifyCenterChange() {
     this.locationService.updateCenter(this.map.getCenter());
+    this.clearEventMarkers();
     this.drawCentralCircleMarker();
   }
 
-  private resetEventMarkers() {
+  private clearEventMarkers() {
     this.eventsMarkers.map(m => m.setMap(null));
   }
 
@@ -131,7 +132,6 @@ export class MapPage {
   }
 
   private loadMarkersWhenEventsChange() {
-    this.resetEventMarkers();
     this.eventService.events$.subscribe(events => {
       this.eventsMarkers = events.map(event => new google.maps.Marker({
         position: new google.maps.LatLng(event.latitude, event.longitude),
