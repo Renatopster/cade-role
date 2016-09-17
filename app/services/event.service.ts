@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Http} from '@angular/http';
 import 'rxjs/add/operator/map';
-import {ReplaySubject} from "rxjs";
+import {ReplaySubject, Observable} from "rxjs";
 import LatLng = google.maps.LatLng;
 import {LocationService} from "./location.service";
 import {DateInterval} from "../shared/DateInterval";
@@ -12,8 +12,8 @@ export class EventService {
 
   center: LatLng;
 
-  private events = new ReplaySubject<Array<Event>>();
-  events$ = this.events.asObservable();
+  private events = new ReplaySubject<Event[]>();
+  events$: Observable<Event[]> = this.events.asObservable();
 
   private dateInterval: DateInterval;
 
@@ -47,7 +47,7 @@ export class EventService {
     var lat = center.lat();
     var lng = center.lng();
 
-    return new Promise<Array<Event>>(resolve => {
+    return new Promise<Event[]>(resolve => {
       this.http.get('http://cade-role.renatogripp.com.br:3000/events?lat=' + lat + '&lng=' + lng + '&distance=' + distance + '&sort=popularity&since=' + since.toISOString() + '&until=' + until.toISOString())
         .map(res => res.json().events.map((data) => {
           return <Event>{

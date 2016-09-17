@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {ReplaySubject} from "rxjs";
+import {ReplaySubject, Observable} from "rxjs";
 import LatLng = google.maps.LatLng;
 import {Geolocation} from 'ionic-native';
 
@@ -7,7 +7,7 @@ import {Geolocation} from 'ionic-native';
 export class LocationService {
 
   private center = new ReplaySubject<LatLng>();
-  center$ = this.center.asObservable();
+  center$: Observable<LatLng> = this.center.asObservable();
 
   constructor() {
     this.grabUserLocation().then(location => this.updateCenter(location));
