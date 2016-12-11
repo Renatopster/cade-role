@@ -10,6 +10,7 @@ import {CrNavbar} from '../cr-navbar/cr-navbar';
 import {MapPage} from '../map/map-page/map-page.component';
 import {EventItem} from '../events/event-item/event-item.component';
 import {EventDetailPage} from '../events/event-detail/event-detail.component';
+import {EventsSettings} from '../events/events-settings/events-settings';
 
 var config = {
   tabsHideOnSubPages: 'true'
@@ -25,7 +26,8 @@ var config = {
     MapPage,
     CrNavbar,
     EventItem,
-    EventDetailPage
+    EventDetailPage,
+    EventsSettings
   ],
   imports: [
     IonicModule.forRoot(CadeRoleApp, config)
@@ -36,7 +38,8 @@ var config = {
     TabsPage,
     MapPage,
     EventsPage,
-    EventDetailPage
+    EventDetailPage,
+    EventsSettings
   ],
   providers: [
     {provide: ErrorHandler, useClass: IonicErrorHandler},
