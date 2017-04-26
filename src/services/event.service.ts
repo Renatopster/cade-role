@@ -48,7 +48,7 @@ export class EventService {
     var lng = center.lng();
 
     return new Promise<Event[]>(resolve => {
-      this.http.get('http://cade-role.renatogripp.com.br/events?lat=' + lat + '&lng=' + lng + '&distance=' + distance + '&sort=popularity&since=' + since.toISOString() + '&until=' + until.toISOString())
+      this.http.get('http://cade-role.rgchaves.com.br/events?lat=' + lat + '&lng=' + lng + '&distance=' + distance + '&sort=popularity&since=' + since.toISOString() + '&until=' + until.toISOString())
         .map(res => res.json().events.map((data) => {
           return <Event>{
             id: data.id,
