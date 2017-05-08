@@ -14,6 +14,7 @@ import {EventsSettings} from '../events/events-settings/events-settings';
 import {BrowserModule} from "@angular/platform-browser";
 import {HttpModule} from "@angular/http";
 import {Geolocation} from '@ionic-native/geolocation';
+import {DatePicker} from "@ionic-native/date-picker";
 
 var config = {
   tabsHideOnSubPages: 'true'
@@ -50,7 +51,8 @@ var config = {
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     LocationService,
     EventService,
-    Geolocation
+    Geolocation,
+    DatePicker
   ]
 })
 export class AppModule {

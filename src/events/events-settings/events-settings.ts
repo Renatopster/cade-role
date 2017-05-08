@@ -1,13 +1,15 @@
 import {Component} from '@angular/core';
 import {ViewController} from 'ionic-angular';
 import {EventService} from '../../services/event.service';
+import {DatePicker} from '@ionic-native/date-picker';
 
 @Component({
   templateUrl: 'events-settings.html'
 })
 export class EventsSettings {
   constructor(public viewCtrl: ViewController,
-              private eventService: EventService) {
+              private eventService: EventService,
+              private datePicker: DatePicker) {
   }
 
   today() {
@@ -49,7 +51,19 @@ export class EventsSettings {
   }
 
   pick() {
-    console.log('gonna pick');
+    this.datePicker.show({
+      mode: 'date',
+      date: this.eventService.getDateInterval().since
+    })
+      .then((since: Date) => {
+        since.setHours(0, 0, 0, 0);
+        var until = new Date(since.getTime());
+        until.setDate(until.getDate() + 1);
+        this.eventService.updateDateInterval({
+          since: since,
+          until: until
+        });
+      })
     this.viewCtrl.dismiss();
   }
 

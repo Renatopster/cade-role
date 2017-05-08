@@ -38,6 +38,10 @@ export class EventService {
     this.refreshEvents();
   }
 
+  public getDateInterval() {
+    return this.dateInterval
+  }
+
   refreshEvents() {
     var since = this.dateInterval.since;
     var until = this.dateInterval.until;
