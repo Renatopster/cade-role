@@ -11,6 +11,9 @@ import {MapPage} from '../map/map-page/map-page.component';
 import {EventItem} from '../events/event-item/event-item.component';
 import {EventDetailPage} from '../events/event-detail/event-detail.component';
 import {EventsSettings} from '../events/events-settings/events-settings';
+import {BrowserModule} from "@angular/platform-browser";
+import {HttpModule} from "@angular/http";
+import {Geolocation} from '@ionic-native/geolocation';
 
 var config = {
   tabsHideOnSubPages: 'true'
@@ -30,6 +33,8 @@ var config = {
     EventsSettings
   ],
   imports: [
+    BrowserModule,
+    HttpModule,
     IonicModule.forRoot(CadeRoleApp, config)
   ],
   bootstrap: [IonicApp],
@@ -44,7 +49,8 @@ var config = {
   providers: [
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     LocationService,
-    EventService
+    EventService,
+    Geolocation
   ]
 })
 export class AppModule {

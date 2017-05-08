@@ -1,6 +1,7 @@
 import {Component, ViewChild, ElementRef} from '@angular/core';
 import {LocationService} from '../../services/location.service';
 import {EventService} from '../../services/event.service';
+import {googlemaps} from 'googlemaps'
 
 @Component({
   templateUrl: 'map-page.component.html'
