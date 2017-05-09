@@ -11,6 +11,9 @@ export class LocationService {
   center$: Observable<LatLng> = this.center.asObservable();
 
   constructor(private geolocation: Geolocation) {
+  }
+
+  init() {
     this.grabUserLocation().then(location => this.updateCenter(location));
   }
 

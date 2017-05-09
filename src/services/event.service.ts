@@ -12,6 +12,9 @@ export class EventService {
 
   center: LatLng;
 
+  private loading = new ReplaySubject<boolean>();
+  loading$: Observable<boolean> = this.loading.asObservable();
+
   private events = new ReplaySubject<Event[]>();
   events$: Observable<Event[]> = this.events.asObservable();
 
@@ -27,10 +30,12 @@ export class EventService {
   }
 
   private subscribeToMapCenter() {
-    this.locationService.center$.subscribe(center => {
-      this.center = center;
-      this.refreshEvents();
-    });
+    this.locationService.center$
+      .distinctUntilChanged((x, y) => x.lat() == y.lat() && x.lng() == y.lng())
+      .subscribe(center => {
+        this.center = center;
+        this.refreshEvents();
+      });
   }
 
   public updateDateInterval(dateInterval: DateInterval) {
@@ -52,6 +57,7 @@ export class EventService {
     var lng = center.lng();
 
     return new Promise<Event[]>(resolve => {
+      this.loading.next(true);
       this.http.get('http://cade-role.rgchaves.com.br/events?lat=' + lat + '&lng=' + lng + '&distance=' + distance + '&sort=popularity&since=' + since.toISOString() + '&until=' + until.toISOString())
         .map(res => res.json().events.map((data) => {
           return <Event>{
@@ -71,6 +77,7 @@ export class EventService {
           };
         }))
         .subscribe(events => {
+          this.loading.next(false);
           events = events.sort(function (a, b) {
             if (a.attendingCount < b.attendingCount) {
               return 1;
