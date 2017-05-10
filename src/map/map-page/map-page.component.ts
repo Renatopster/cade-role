@@ -2,6 +2,8 @@ import {Component, ViewChild, ElementRef} from '@angular/core';
 import {LocationService} from '../../services/location.service';
 import {EventService} from '../../services/event.service';
 import {googlemaps} from 'googlemaps'
+import {EventDetailPage} from "../../events/event-detail/event-detail.component";
+import {NavController} from "ionic-angular";
 
 @Component({
   templateUrl: 'map-page.component.html'
@@ -10,12 +12,12 @@ export class MapPage {
   private userMarker;
   private circleMarker;
   private eventsMarkers = [];
-  private infoWindow = null;
   private map;
   @ViewChild('map') mapElement: ElementRef;
 
   constructor(private locationService: LocationService,
-              private eventService: EventService) {
+              private eventService: EventService,
+              private navCtrl: NavController) {
     setInterval(() => locationService.grabUserLocation().then(location => this.refreshUserMarker(location)), 5000);
   }
 
@@ -143,28 +145,9 @@ export class MapPage {
           }
         });
         marker.addListener('click', () => {
-          if (this.infoWindow) {
-            this.infoWindow.close();
-          }
-          this.infoWindow = new google.maps.InfoWindow({
-            content: `<ion-item>
-  <ion-thumbnail item-left>
-    <img src="${event.profilePictureUrl}">
-  </ion-thumbnail>
-  <h6>${event.name}</h6>
-  <p>${event.venueName}</p>
-  <p>
-    <time>${event.startTime}</time>
-  </p>
-  <p>${event.attendingCount}
-    <ion-icon name="thumbs-up"></ion-icon>
-    ${event.maybeCount}
-    <ion-icon name="star"></ion-icon>
-  </p>
-</ion-item>
-`
+          this.navCtrl.push(EventDetailPage, {
+            event: event
           });
-          this.infoWindow.open(this.map, marker);
         });
 
         return marker;
