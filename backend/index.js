@@ -1,7 +1,7 @@
 'use strict';
 const EventSearch = require("facebook-events-by-location-core");
 
-exports.handler = (event, context, callback) => {
+exports.getEvents = (event, context, callback) => {
     const options = event.queryStringParameters;
     options.accessToken = options.access_token || process.env.FEBL_ACCESS_TOKEN || null;
 
