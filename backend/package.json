@@ -1,0 +1,15 @@
+{
+  "name": "cade-role-backend",
+  "version": "0.0.1",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "dev": "sam local start-api"
+  },
+  "dependencies": {
+    "aws-sam-local": "^0.2.2",
+    "facebook-events-by-location-core": "^0.6.0",
+    "global": "^4.3.2"
+  },
+  "devDependencies": {}
+}
