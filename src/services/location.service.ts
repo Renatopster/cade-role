@@ -22,18 +22,8 @@ export class LocationService {
   }
 
   grabUserLocation(): Promise<LatLng> {
-    return new Promise(resolve => {
-      let options = {timeout: 3000, enableHighAccuracy: true};
-
-      this.geolocation.getCurrentPosition(options).then(
-        (position) => {
-          var location = new LatLng(position.coords.latitude, position.coords.longitude);
-          resolve(location);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
-    });
+    const options = {timeout: 3000, enableHighAccuracy: true};
+    return this.geolocation.getCurrentPosition(options)
+      .then(position => new LatLng(position.coords.latitude, position.coords.longitude))
   }
 }
