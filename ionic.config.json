@@ -1,6 +1,8 @@
 {
   "name": "cade-role",
-  "app_id": "",
-  "v2": true,
-  "typescript": true
+  "app_id": "e8bb3b8a",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular"
 }
