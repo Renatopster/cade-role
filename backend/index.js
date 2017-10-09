@@ -10,7 +10,13 @@ exports.getEvents = (event, context, callback) => {
     // Search and handle results
     es.search(options)
         .then(function (events) {
-            callback(null, {statusCode: 200, body: JSON.stringify(events, null, 2)});
+            callback(null, {
+              statusCode: 200,
+              body: JSON.stringify(events, null, 2),
+              headers: {
+                'Access-Control-Allow-Origin': '*',
+              },
+            });
         })
         .catch(function (error) {
             callback(null, {statusCode: 501, body: JSON.stringify(error, null, 2)});
